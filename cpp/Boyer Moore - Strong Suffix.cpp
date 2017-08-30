@@ -2,13 +2,10 @@
 #include <vector>
 using namespace std;
 
-void strong_suffix(string pattern)
+void strong_suffix(string pattern, vector<int> &f, vector<int> &shift)
 {
     auto m = static_cast<int>(pattern.length());
     auto i = m, j = m + 1;
-    vector<int> f(static_cast<unsigned long>(m + 1));
-    vector<int> shift(static_cast<unsigned long>(m + 1));
-    // initial value, for the empty string
     f[i] = j;
 
     while(i > 0)
@@ -20,6 +17,20 @@ void strong_suffix(string pattern)
             j = f[j];
         }
         f[--i] = --j;
+    }
+}
+
+void strong_suffix_2(const string &pattern, vector<int> &f, vector<int> &shift)
+{
+    auto m = static_cast<int>(pattern.length());
+    auto j = f[0];
+    for(int i = 0; i <= m; i++)
+    {
+        if(shift[i] == 0)
+            shift[i] = j;
+
+        if(i == j)
+            j = f[j];
     }
 }
 
